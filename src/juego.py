@@ -1,10 +1,3 @@
-import os
-import sys
-
-file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'modulos'))
-sys.path.append(file_path)
-import errores
-
 '''
 Instituto Tecnológico de Costa Rica
 
@@ -16,7 +9,13 @@ Profesor: William Mata Rodríguez
 
 I Semestre 2025
 '''
+import os
+import sys
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from modulos import errores
+from src import game_logic
 import tkinter as tk
 
 #Función prinicipal del programa
@@ -26,7 +25,7 @@ def main():
     def iniciar_juego():
         antes_jugar = tk.Toplevel()
         antes_jugar.title("Kakuro - Antes de Jugar")
-        antes_jugar.geometry("360x200")
+        antes_jugar.geometry("360x250")
 
         info = tk.Label(antes_jugar, text="Antes de jugar, ¿cuál es su nombre?", font=("Futura", 14))
         info.grid(row=0, column=0, padx=20, pady=20)
@@ -59,8 +58,11 @@ def main():
             inicio = tk.Label(juego, text="Kakuro", font=('Futura', 40), fg='green')
             inicio.grid(row=0, column=0, padx=(5, 20), pady=10, columnspan=2)
 
-            nombre = tk.Label(juego, text=f"Jugador: {nombre}", font=('Futura', 17))
-            nombre.grid(row=0, column=2, padx=20, pady=10, columnspan=3, sticky='w')
+            nombre_label = tk.Label(juego, text=f"Jugador: {nombre}", font=('Futura', 17))
+            nombre_label.grid(row=0, column=2, padx=20, pady=10, columnspan=3, sticky='w')
+            
+            tablero = game_logic.setup_juego(juego)
+            
 
 
 
