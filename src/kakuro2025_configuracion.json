@@ -1,5 +1,5 @@
 {
     "nivel": "facil",
-    "reloj":"cronometro",
-    "tiempo":"023030"
+    "tipo_reloj": "temporizador",
+    "tiempo": "01:00:00"
 }
