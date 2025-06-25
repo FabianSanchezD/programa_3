@@ -1,4 +1,5 @@
 import tkinter as tk
+from src import game_logic
 
 def numeros_botones(root, tamano=9, num_seleccionado=None):
     frame = tk.Frame(root)
@@ -24,7 +25,7 @@ def numeros_botones(root, tamano=9, num_seleccionado=None):
         
         botones.append((canvas, i))
         
-        canvas.bind("<Button-1>", lambda e, num=i: onClick(num)) #REVISAR ESO
+        canvas.bind("<Button-1>", lambda e, num=i: onClick(num))
         
     def onClick(number):
         for btn, num in botones:
@@ -38,7 +39,9 @@ def numeros_botones(root, tamano=9, num_seleccionado=None):
         clicked_btn.create_text(30, 20, text=f"{number}", font=("Futura", 16))
         
         print(f"Seleccionó {number}")
-
+        
+        game_logic.establecer_num_seleccionado(number)
+        
         return number
     
     borrador = tk.Frame(frame, bd=0, highlightthickness=0)
@@ -50,7 +53,7 @@ def numeros_botones(root, tamano=9, num_seleccionado=None):
     eraser_canvas.create_rectangle(5, 10, 40, 25, fill="#FF6347", outline="black") 
     eraser_canvas.create_rectangle(40, 10, 55, 25, fill="#4682B4", outline="black") 
     
-    eraser_canvas.bind("<Button-1>", lambda e: click_borrador()) #REVISAR ESO
+    eraser_canvas.bind("<Button-1>", lambda e: click_borrador())
     
     def click_borrador():
         for btn, num in botones:
@@ -59,6 +62,8 @@ def numeros_botones(root, tamano=9, num_seleccionado=None):
             btn.create_text(30, 20, text=str(num), font=("Arial", 16))
         
         print("Seleccionó el borrador")
+
+        game_logic.establecer_num_seleccionado(0)
         return 0 
     
     return frame, botones

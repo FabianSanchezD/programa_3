@@ -37,16 +37,6 @@ def main():
 
         continuar = tk.Button(antes_jugar, text="Continuar", font=("Futura", 12), command=lambda: iniciar_partida(nombre_entry.get()))
         continuar.grid(row=2, column=0, padx=20, pady=10)
-
-        def desbloquear_juego(tablero, nums, iniciar_btn):
-            # Cambiar el estado del tablero y botones a normal
-            tablero['state'] = tk.NORMAL
-            for btn in nums:
-                canvas_btn = btn[0]
-                canvas_btn['state'] = tk.NORMAL
-                
-            # Deshabilitar el botón de iniciar juego una vez presionado
-            iniciar_btn.config(state=tk.DISABLED, bg='gray')
         
         def iniciar_partida(nombre):
             if nombre.strip() == "":
@@ -73,6 +63,7 @@ def main():
             
             tablero = game_logic.setup_juego(juego)
             tablero.grid(row=1, column=0, columnspan=2, rowspan=9, padx=10, pady=10)
+            
             frame, botones_nums = menus.numeros_botones(juego)
             frame.grid(row=1, column=3, rowspan=9, padx=10, pady=10, sticky='e')
             
@@ -85,13 +76,30 @@ def main():
             for btn in botones_nums:
                 canvas_btn = btn[0]
                 canvas_btn['state'] = tk.DISABLED
-        
+            
+            # Crear un bloqueador grande que cubra toda el área del juego
+            bloqueador = tk.Frame(juego, bg='gray80', bd=2, relief=tk.RAISED)
+            bloqueador.place(x=10, y=70, width=tablero.winfo_width()+frame.winfo_width()+30, 
+                          height=tablero.winfo_height()+30)
+            
+            # Mensaje en el bloqueador
+            mensaje = tk.Label(bloqueador, text="¡Presiona INICIAR JUEGO\npara comenzar!", 
+                            font=('Futura', 18), bg='gray80', fg='black')
+            mensaje.place(relx=0.5, rely=0.4, anchor='center')
+            
+            # Función simple para habilitar el juego
+            def iniciar():
+                bloqueador.destroy()
+                tablero['state'] = tk.NORMAL
+                for btn in botones_nums:
+                    canvas_btn = btn[0]
+                    canvas_btn['state'] = tk.NORMAL
             
             # Botón iniciar juego en el centro del bloqueador
-            iniciar_juego = tk.Button(juego, text="INICIAR JUEGO", font=("Futura", 12), 
-                                   bg='red', fg='white', padx=5, pady=5,
-                                   command=lambda: desbloquear_juego(tablero, botones_nums, iniciar_juego))
-            iniciar_juego.grid(row=10, column=0, padx=10, pady=10, sticky='ew')
+            iniciar_juego = tk.Button(bloqueador, text="INICIAR JUEGO", font=("Futura", 14), 
+                                   bg='red', fg='white', padx=20, pady=10,
+                                   command=iniciar)
+            iniciar_juego.place(relx=0.5, rely=0.6, anchor='center')
 
     #Va a iniciar la configuración
     def configuracion():
