@@ -23,6 +23,14 @@ import tkinter as tk
 
 #Función prinicipal del programa
 def main():
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    config_path = os.path.join(script_dir, "kakuro2025_configuracion.json")
+
+    with open(config_path, "r") as file:
+        configs = json.load(file)
+
     #Va a iniciar el juego
     def iniciar_juego():
         antes_jugar = tk.Toplevel()
@@ -37,16 +45,6 @@ def main():
 
         continuar = tk.Button(antes_jugar, text="Continuar", font=("Futura", 12), command=lambda: iniciar_partida(nombre_entry.get()))
         continuar.grid(row=2, column=0, padx=20, pady=10)
-
-        def desbloquear_juego(tablero, nums, iniciar_btn):
-            # Cambiar el estado del tablero y botones a normal
-            tablero['state'] = tk.NORMAL
-            for btn in nums:
-                canvas_btn = btn[0]
-                canvas_btn['state'] = tk.NORMAL
-                
-            # Deshabilitar el botón de iniciar juego una vez presionado
-            iniciar_btn.config(state=tk.DISABLED, bg='gray')
         
         def iniciar_partida(nombre):
             if nombre.strip() == "":
@@ -61,37 +59,121 @@ def main():
             root.withdraw()
             juego = tk.Toplevel()
             juego.title("Kakuro - Jugando")
-            juego.geometry("650x800") 
+            juego.geometry("600x850") 
 
-            inicio = tk.Label(juego, text="Kakuro", font=('Futura', 40), fg='green')
-            inicio.grid(row=0, column=0, padx=(5, 20), pady=10, columnspan=2)
-
-            nombre_label = tk.Label(juego, text=f"Jugador: {nombre}", font=('Futura', 17))
-            nombre_label.grid(row=0, column=2, padx=20, pady=10, columnspan=3, sticky='w')
+            # Título Kakuro
+            titulo = tk.Label(juego, text="KAKURO", font=('Arial Black', 28, 'bold'), fg='green')
+            titulo.grid(row=0, column=0, columnspan=3, pady=(10, 5))
+            
+            # Campo para nombre del jugador
+            jugador_frame = tk.Frame(juego)
+            jugador_frame.grid(row=1, column=0, columnspan=3, pady=(0, 10))
+            jugador_label = tk.Label(jugador_frame, text=f"Jugador: {nombre}", font=('Arial', 12))
+            jugador_label.grid(row=0, column=0, sticky='e')
             
             game_logic.establecer_num_seleccionado(0)
             
+            # Tablero
             tablero = game_logic.setup_juego(juego)
-            tablero.grid(row=1, column=0, columnspan=2, rowspan=9, padx=10, pady=10)
+            tablero.grid(row=2, column=0, columnspan=2, rowspan=9, padx=10, pady=10)
+            
+            # Botones de números
             frame, botones_nums = menus.numeros_botones(juego)
-            frame.grid(row=1, column=3, rowspan=9, padx=10, pady=10, sticky='e')
-            
-            print(botones_nums)
+            frame.grid(row=2, column=2, rowspan=9, padx=10, pady=10, sticky='ne')
 
-            # También deshabilitamos los controles
-            tablero['state'] = tk.DISABLED
+            # Botón borrador
+            borrador_frame = tk.Frame(juego)
+            borrador_frame.grid(row=11, column=2, padx=10, pady=10)
             
-            # Deshabilitar los botones numéricos
-            for btn in botones_nums:
-                canvas_btn = btn[0]
-                canvas_btn['state'] = tk.DISABLED
-        
+            # Botones de acción
+            botones_frame = tk.Frame(juego)
+            botones_frame.grid(row=12, column=0, columnspan=3, pady=10)
             
-            # Botón iniciar juego en el centro del bloqueador
-            iniciar_juego = tk.Button(juego, text="INICIAR JUEGO", font=("Futura", 12), 
-                                   bg='red', fg='white', padx=5, pady=5,
-                                   command=lambda: desbloquear_juego(tablero, botones_nums, iniciar_juego))
-            iniciar_juego.grid(row=10, column=0, padx=10, pady=10, sticky='ew')
+            # Primera fila de botones
+            btn_iniciar = tk.Button(botones_frame, text="INICIAR\nJUEGO", font=('Arial', 10, 'bold'), 
+                                   bg='gray', fg='black', width=12, height=2)
+            btn_iniciar['state'] = 'disabled'
+            btn_iniciar.grid(row=0, column=0, padx=5, pady=5)
+            
+            btn_deshacer = tk.Button(botones_frame, text="DESHACER\nJUGADA", font=('Arial', 10, 'bold'), 
+                                    bg="#9AFA9A", fg='black', width=12, height=2)
+            btn_deshacer.grid(row=0, column=1, padx=5, pady=5)
+            
+            btn_borrar = tk.Button(botones_frame, text="BORRAR\nJUEGO", font=('Arial', 10, 'bold'), 
+                                  bg="#59ABFD", fg='black', width=12, height=2)
+            btn_borrar.grid(row=0, column=2, padx=5, pady=5)
+            
+            btn_guardar = tk.Button(botones_frame, text="GUARDAR\nJUEGO", font=('Arial', 10, 'bold'), 
+                                   bg="#FF8000", fg='black', width=12, height=2)
+            btn_guardar.grid(row=0, column=3, padx=5, pady=5)
+            
+            btn_records = tk.Button(botones_frame, text="RÉCORDS", font=('Arial', 10, 'bold'), 
+                                  bg="#FFFF00", fg='black', width=12, height=2)
+            btn_records.grid(row=0, column=4, padx=5, pady=5)
+            
+            # Segunda fila de botones
+            btn_rehacer = tk.Button(botones_frame, text="REHACER\nJUGADA", font=('Arial', 10, 'bold'), 
+                                   bg="#00C2C2", fg='black', width=12, height=2)
+            btn_rehacer.grid(row=1, column=1, padx=5, pady=5)
+            
+            btn_terminar = tk.Button(botones_frame, text="TERMINAR\nJUEGO", font=('Arial', 10, 'bold'), 
+                                    bg="#006B24", fg='black', width=12, height=2)
+            btn_terminar.grid(row=1, column=2, padx=5, pady=5)
+            
+            btn_cargar = tk.Button(botones_frame, text="CARGAR\nJUEGO", font=('Arial', 10, 'bold'), 
+                                  bg="#DB4F09", fg='black', width=12, height=2)
+            btn_cargar.grid(row=1, column=3, padx=5, pady=5)
+            
+            # Reloj
+            reloj_frame = tk.Frame(juego)
+            reloj_frame.grid(row=13, column=0, columnspan=3, pady=10)
+            
+            headers = ["Horas", "Minutos", "Segundos"]
+            for i, text in enumerate(headers):
+                label = tk.Label(reloj_frame, text=text, borderwidth=1, relief="solid", width=10)
+                label.grid(row=0, column=i)
+                
+            horas = tk.Label(reloj_frame, text="00", borderwidth=1, relief="sunken", width=10)
+            horas.grid(row=1, column=0)
+            
+            minutos = tk.Label(reloj_frame, text="00", borderwidth=1, relief="sunken", width=10)
+            minutos.grid(row=1, column=1)
+            
+            segundos = tk.Label(reloj_frame, text="00", borderwidth=1, relief="sunken", width=10)
+            segundos.grid(row=1, column=2)
+            
+            # Nivel
+            nivel = configs["nivel"]
+            print(configs)
+            match nivel:
+                case "facil":
+                    nivel = "FÁCIL"
+                case "medio":
+                    nivel = "MEDIO"
+                case "dificil":
+                    nivel = "DIFÍCIL"
+                case "experto":
+                    nivel = "EXPERTO"
+
+            nivel_label = tk.Label(juego, text=f"NIVEL {nivel}", font=('Arial', 12, 'bold'))
+            nivel_label.grid(row=14, column=0, columnspan=3, pady=5)
+
+            overlay = tk.Toplevel(juego)
+            overlay.title("Kakuro - Jugando")
+            tk.Button(overlay, text="INICIAR JUEGO", font=("Futura",20), bg='green', command=overlay.destroy).pack(pady=450)
+            overlay.grab_set() 
+            overlay.transient(juego) 
+            
+            juego.update_idletasks()
+
+            juego_x = juego.winfo_x()
+            juego_y = juego.winfo_y()
+            juego_width = juego.winfo_width()
+            juego_height = juego.winfo_height()
+
+            overlay_width = 600
+            overlay_height = 850
+            overlay.geometry(f"{overlay_width}x{overlay_height}+{juego_x + (juego_width - overlay_width)//2}+{juego_y + (juego_height - overlay_height)//2}")
 
     #Va a iniciar la configuración
     def configuracion():

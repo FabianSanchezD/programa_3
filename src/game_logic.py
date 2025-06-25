@@ -5,6 +5,7 @@ import os
 configs = {}
 juego = {}
 entries_matrix = [] #esto nos va a servir para guardar las entradas de cada casilla, para también luego borrarlas o modificarlas
+stack_acciones = []  # Pila para guardar las acciones realizadas
 
 config_path = os.path.join(os.path.dirname(__file__), "kakuro2025_configuracion.json")
 
@@ -18,13 +19,14 @@ def establecer_num_seleccionado(num):
     num_seleccionado = num
     print(f"seleccionado: {num_seleccionado}")
 
-def entry_click_handler(event, row, col):
+def click_num(event, row, col):
     global num_seleccionado
     if num_seleccionado == 0:  #0 es borrador
         event.widget.delete(0, tk.END)
     else:
         event.widget.delete(0, tk.END)
         event.widget.insert(0, str(num_seleccionado))
+        stack_acciones.append((row, column, num_seleccionado)) #guarda la ultima accion en la pila
 
 def crear_casilla(canvas, cord_x, cord_y, fila, columna, suma_ver=None, suma_hor=None, jugable=False):
     global entries_matrix
@@ -36,7 +38,7 @@ def crear_casilla(canvas, cord_x, cord_y, fila, columna, suma_ver=None, suma_hor
         entry = tk.Entry(canvas, width=2, font=('Arial', 12), justify='center')
         canvas.create_window(cord_x + 22, cord_y + 22, window=entry)
         
-        entry.bind("<Button-1>", lambda event, r=fila, c=columna: entry_click_handler(event, r, c))
+        entry.bind("<Button-1>", lambda event, r=fila, c=columna: click_num(event, r, c))
         
         return entry
 
@@ -99,7 +101,7 @@ def crear_tablero_final(root, tamano, tablero):
             if valor_celda == 0:
                 entry = crear_casilla(canvas, cord_x, cord_y, i, j, jugable=True)
                 entries_matrix[i][j] = entry
-                
+
             elif isinstance(valor_celda, list):
                 if not valor_celda:
                     crear_casilla(canvas, cord_x, cord_y, i, j, jugable=False)

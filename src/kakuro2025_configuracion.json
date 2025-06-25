@@ -1,5 +1,5 @@
 {
-    "nivel": "facil",
-    "tipo_reloj": "temporizador",
-    "tiempo": "01:00:00"
+    "nivel": "dificil",
+    "tipo_reloj": "nousar_reloj",
+    "tiempo": "00:00:00"
 }
