@@ -1,11 +1,17 @@
 import tkinter as tk
 import json
 import os
+import sys
+
+# Añade la ruta del proyecto para poder importar módulos correctamente
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 configs = {}
 juego = {}
 entries_matrix = [] #esto nos va a servir para guardar las entradas de cada casilla, para también luego borrarlas o modificarlas
 stack_acciones = []  # Pila para guardar las acciones realizadas
+botones = []  # Almacenará los botones de números
+
 
 config_path = os.path.join(os.path.dirname(__file__), "kakuro2025_configuracion.json")
 
@@ -13,6 +19,12 @@ with open(config_path, "r") as file:
     configs = json.load(file)
 
 num_seleccionado = 0
+
+
+def establecer_botones(botones_arr):
+    global botones
+    botones = botones_arr
+    print(f"Botones establecidos en game_logic: {botones}")
 
 def establecer_num_seleccionado(num):
     global num_seleccionado
@@ -26,7 +38,8 @@ def click_num(event, row, col):
     else:
         event.widget.delete(0, tk.END)
         event.widget.insert(0, str(num_seleccionado))
-        stack_acciones.append((row, column, num_seleccionado)) #guarda la ultima accion en la pila
+        stack_acciones.append((row + 1, col + 1, num_seleccionado)) #guarda la ultima accion en la pila
+        print(stack_acciones)
 
 def crear_casilla(canvas, cord_x, cord_y, fila, columna, suma_ver=None, suma_hor=None, jugable=False):
     global entries_matrix
@@ -123,6 +136,7 @@ def cargar_partida(nivel):
 
 
 def setup_juego(root, tamano=9):
+    global botones
     global configs, juego, tablero
 
     nivel = configs['nivel']
@@ -132,6 +146,39 @@ def setup_juego(root, tamano=9):
     tablerov = crear_tablero(tamano, juego)
     
     tablerof = crear_tablero_final(root, tamano, tablerov)
-
-    
+    print(entries_matrix)
     return tablerof
+
+
+stack_para_rehacer = []
+
+def deshacer_jugada(stack=stack_acciones):
+    global stack_para_rehacer
+    if not stack:
+        return
+
+    ultima = stack.pop()
+    stack_para_rehacer.append(ultima)  # Guarda la acción deshecha para rehacerla
+    fila = ultima[0]
+    columna = ultima[1]
+    entry = entries_matrix[fila - 1][columna - 1]
+
+    if entry:
+        entry.delete(0, tk.END)
+        print(stack)
+
+def rehacer_jugada(stack=stack_para_rehacer):
+    if not stack:
+        return
+
+    ultima = stack.pop()
+    print(ultima)
+    fila = ultima[0]
+    columna = ultima[1]
+    num = ultima[2]
+    entry = entries_matrix[fila - 1][columna - 1]
+
+    if entry:
+        entry.delete(0, tk.END)
+        entry.insert(0, str(num))
+        print(stack)

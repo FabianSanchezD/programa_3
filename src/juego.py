@@ -80,6 +80,9 @@ def main():
             # Botones de números
             frame, botones_nums = menus.numeros_botones(juego)
             frame.grid(row=2, column=2, rowspan=9, padx=10, pady=10, sticky='ne')
+            
+            # Enviar botones a game_logic para que los pueda usar
+            game_logic.establecer_botones(botones_nums)
 
             # Botón borrador
             borrador_frame = tk.Frame(juego)
@@ -96,7 +99,7 @@ def main():
             btn_iniciar.grid(row=0, column=0, padx=5, pady=5)
             
             btn_deshacer = tk.Button(botones_frame, text="DESHACER\nJUGADA", font=('Arial', 10, 'bold'), 
-                                    bg="#9AFA9A", fg='black', width=12, height=2)
+                                    bg="#9AFA9A", fg='black', width=12, height=2, command=game_logic.deshacer_jugada)
             btn_deshacer.grid(row=0, column=1, padx=5, pady=5)
             
             btn_borrar = tk.Button(botones_frame, text="BORRAR\nJUEGO", font=('Arial', 10, 'bold'), 
@@ -113,7 +116,7 @@ def main():
             
             # Segunda fila de botones
             btn_rehacer = tk.Button(botones_frame, text="REHACER\nJUGADA", font=('Arial', 10, 'bold'), 
-                                   bg="#00C2C2", fg='black', width=12, height=2)
+                                   bg="#00C2C2", fg='black', width=12, height=2, command=game_logic.rehacer_jugada)
             btn_rehacer.grid(row=1, column=1, padx=5, pady=5)
             
             btn_terminar = tk.Button(botones_frame, text="TERMINAR\nJUEGO", font=('Arial', 10, 'bold'), 

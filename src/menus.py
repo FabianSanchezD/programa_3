@@ -1,11 +1,17 @@
 import tkinter as tk
+import sys
+import os
+
+# Añade la ruta del proyecto para poder importar módulos correctamente
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from src import game_logic
+botones = []
 
 def numeros_botones(root, tamano=9, num_seleccionado=None):
+    global botones
     frame = tk.Frame(root)
     frame.grid(row=1, column=7, rowspan=9, padx=10, pady=10, sticky="n")
-    
-    botones = []
     
     for i in range(1, tamano + 1):
         if i == num_seleccionado:
@@ -26,7 +32,8 @@ def numeros_botones(root, tamano=9, num_seleccionado=None):
         botones.append((canvas, i))
         
         canvas.bind("<Button-1>", lambda e, num=i: onClick(num))
-        
+
+    print(botones)
     def onClick(number):
         for btn, num in botones:
             btn.delete("all")
@@ -66,5 +73,7 @@ def numeros_botones(root, tamano=9, num_seleccionado=None):
         game_logic.establecer_num_seleccionado(0)
         return 0 
     
+    
     return frame, botones
+
 
