@@ -1,53 +1,175 @@
 [
-    {
-        "nivel_de_dificultad": "dificil", 
-        "partida": "d_01", 
-        "claves": [
-        { "tipo_de_clave": "C", "fila": 1, "columna": 2, "clave": 9, "casillas": 2 },
-        { "tipo_de_clave": "F", "fila": 1, "columna": 2, "clave": 4, "casillas": 2 },
-        { "tipo_de_clave": "C", "fila": 1, "columna": 3, "clave": 9, "casillas": 2 },
-        { "tipo_de_clave": "C", "fila": 1, "columna": 4, "clave": 12, "casillas": 3 },
-        { "tipo_de_clave": "C", "fila": 1, "columna": 6, "clave": 7, "casillas": 2 },
-        { "tipo_de_clave": "C", "fila": 1, "columna": 8, "clave": 10, "casillas": 2 },
-        
-        { "tipo_de_clave": "F", "fila": 2, "columna": 2, "clave": 4, "casillas": 2 },
-        { "tipo_de_clave": "F", "fila": 3, "columna": 2, "clave": 9, "casillas": 2 },
-        { "tipo_de_clave": "C", "fila": 4, "columna": 7, "clave": 6, "casillas": 2 },
-        { "tipo_de_clave": "F", "fila": 5, "columna": 4, "clave": 7, "casillas": 3 },
-        { "tipo_de_clave": "F", "fila": 7, "columna": 2, "clave": 6, "casillas": 2 },
-        { "tipo_de_clave": "F", "fila": 9, "columna": 5, "clave": 3, "casillas": 2 },
+  {
+    "nivel_de_dificultad": "dificil",
+    "partida": 1,
+    "claves": [
+      {"tipo_de_clave": "C", "fila": 1, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 2, "clave": 16, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 3, "clave": 43, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 4, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 5, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 6, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 7, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 8, "clave": 43, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 9, "clave": 10, "casillas": 8},
 
-        { "tipo_de_clave": "F", "fila": 1, "columna": 1, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 1, "columna": 6, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 1, "columna": 7, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 2, "columna": 1, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 3, "columna": 1, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 4, "columna": 1, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 4, "columna": 2, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 4, "columna": 3, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 4, "columna": 4, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 4, "columna": 5, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 4, "columna": 6, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 5, "columna": 1, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 5, "columna": 2, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 6, "columna": 1, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 6, "columna": 2, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 6, "columna": 3, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 6, "columna": 4, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 6, "columna": 5, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 6, "columna": 6, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 6, "columna": 7, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 7, "columna": 1, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 8, "columna": 1, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 8, "columna": 2, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 9, "columna": 1, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 9, "columna": 2, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 9, "columna": 3, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 9, "columna": 4, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 9, "columna": 6, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 9, "columna": 7, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 9, "columna": 8, "clave": 0, "casillas": 0 },
-        { "tipo_de_clave": "F", "fila": 9, "columna": 9, "clave": 0, "casillas": 0 }
+      {"tipo_de_clave": "F", "fila": 2, "columna": 1, "clave": 11, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 2, "columna": 4, "clave": 12, "casillas": 7},
+      {"tipo_de_clave": "C", "fila": 2, "columna": 5, "clave": 8, "casillas": 7},
+      {"tipo_de_clave": "C", "fila": 2, "columna": 6, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 2, "columna": 7, "clave": 8, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 2, "columna": 8, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 2, "columna": 9, "clave": 0, "casillas": 0},
+
+      {"tipo_de_clave": "F", "fila": 3, "columna": 1, "clave": 18, "casillas": 4},
+      {"tipo_de_clave": "C", "fila": 3, "columna": 6, "clave": 16, "casillas": 6},
+      {"tipo_de_clave": "F", "fila": 3, "columna": 7, "clave": 16, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 3, "columna": 7, "clave": 10, "casillas": 6},
+
+      {"tipo_de_clave": "C", "fila": 4, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 4, "columna": 2, "clave": 27, "casillas": 7},
+      {"tipo_de_clave": "C", "fila": 4, "columna": 2, "clave": 13, "casillas": 5},
+      {"tipo_de_clave": "C", "fila": 4, "columna": 10, "clave": 8, "casillas": 5},
+
+      {"tipo_de_clave": "F", "fila": 5, "columna": 1, "clave": 17, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 5, "columna": 4, "clave": 11, "casillas": 4},
+      {"tipo_de_clave": "F", "fila": 5, "columna": 5, "clave": 21, "casillas": 4},
+      {"tipo_de_clave": "C", "fila": 5, "columna": 5, "clave": 3, "casillas": 4},
+
+      {"tipo_de_clave": "F", "fila": 6, "columna": 1, "clave": 23, "casillas": 5},
+      {"tipo_de_clave": "C", "fila": 6, "columna": 6, "clave": 13, "casillas": 3},
+      {"tipo_de_clave": "F", "fila": 6, "columna": 7, "clave": 15, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 6, "columna": 7, "clave": 15, "casillas": 3},
+
+      {"tipo_de_clave": "C", "fila": 7, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 7, "columna": 2, "clave": 28, "casillas": 6},
+      {"tipo_de_clave": "C", "fila": 7, "columna": 2, "clave": 3, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 7, "columna": 9, "clave": 14, "casillas": 2},
+
+      {"tipo_de_clave": "F", "fila": 8, "columna": 1, "clave": 8, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 8, "columna": 4, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 8, "columna": 5, "clave": 29, "casillas": 4},
+
+      {"tipo_de_clave": "F", "fila": 9, "columna": 1, "clave": 4, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 9, "columna": 4, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 9, "columna": 5, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 9, "columna": 6, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 9, "columna": 7, "clave": 13, "casillas": 2}
     ]
-    }
+  },
+  {
+    "nivel_de_dificultad": "dificil",
+    "partida": 2,
+    "claves": [
+      {"tipo_de_clave": "C", "fila": 1, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 2, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 3, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 4, "clave": 10, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 5, "clave": 8, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 6, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 7, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 8, "clave": 35, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 9, "clave": 10, "casillas": 8},
+
+      {"tipo_de_clave": "C", "fila": 2, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 2, "columna": 2, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 2, "columna": 3, "clave": 6, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 2, "columna": 3, "clave": 38, "casillas": 7},
+      {"tipo_de_clave": "C", "fila": 2, "columna": 6, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 2, "columna": 7, "clave": 16, "casillas": 2},
+
+      {"tipo_de_clave": "C", "fila": 3, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 3, "columna": 2, "clave": 15, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 3, "columna": 2, "clave": 6, "casillas": 6},
+      {"tipo_de_clave": "C", "fila": 3, "columna": 6, "clave": 8, "casillas": 6},
+      {"tipo_de_clave": "F", "fila": 3, "columna": 7, "clave": 6, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 3, "columna": 7, "clave": 16, "casillas": 6},
+
+      {"tipo_de_clave": "F", "fila": 4, "columna": 1, "clave": 8, "casillas": 3},
+      {"tipo_de_clave": "F", "fila": 4, "columna": 4, "clave": 15, "casillas": 5},
+      {"tipo_de_clave": "C", "fila": 4, "columna": 9, "clave": 12, "casillas": 5},
+
+      {"tipo_de_clave": "F", "fila": 5, "columna": 1, "clave": 12, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 5, "columna": 4, "clave": 10, "casillas": 4},
+      {"tipo_de_clave": "F", "fila": 5, "columna": 5, "clave": 16, "casillas": 4},
+      {"tipo_de_clave": "C", "fila": 5, "columna": 5, "clave": 11, "casillas": 4},
+
+      {"tipo_de_clave": "F", "fila": 6, "columna": 1, "clave": 25, "casillas": 5},
+      {"tipo_de_clave": "C", "fila": 6, "columna": 6, "clave": 13, "casillas": 3},
+      {"tipo_de_clave": "F", "fila": 6, "columna": 7, "clave": 5, "casillas": 2},
+
+      {"tipo_de_clave": "C", "fila": 7, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 7, "columna": 2, "clave": 12, "casillas": 5},
+      {"tipo_de_clave": "C", "fila": 7, "columna": 2, "clave": 11, "casillas": 2},
+      {"tipo_de_clave": "F", "fila": 7, "columna": 7, "clave": 17, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 7, "columna": 7, "clave": 16, "casillas": 2},
+
+      {"tipo_de_clave": "F", "fila": 8, "columna": 1, "clave": 3, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 8, "columna": 4, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 8, "columna": 5, "clave": 24, "casillas": 4},
+      {"tipo_de_clave": "C", "fila": 8, "columna": 9, "clave": 0, "casillas": 0},
+
+      {"tipo_de_clave": "F", "fila": 9, "columna": 1, "clave": 14, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 9, "columna": 4, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 9, "columna": 5, "clave": 10, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 9, "columna": 8, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 9, "columna": 9, "clave": 0, "casillas": 0}
+    ]
+  },
+  {
+    "nivel_de_dificultad": "dificil",
+    "partida": 3,
+    "claves": [
+      {"tipo_de_clave": "C", "fila": 1, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 2, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 3, "clave": 30, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 4, "clave": 8, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 5, "clave": 8, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 6, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 7, "clave": 10, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 8, "clave": 12, "casillas": 8},
+      {"tipo_de_clave": "C", "fila": 1, "columna": 9, "clave": 11, "casillas": 8},
+
+      {"tipo_de_clave": "C", "fila": 2, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 2, "columna": 2, "clave": 21, "casillas": 3},
+      {"tipo_de_clave": "F", "fila": 2, "columna": 6, "clave": 20, "casillas": 3},
+
+      {"tipo_de_clave": "C", "fila": 3, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 3, "columna": 2, "clave": 11, "casillas": 3},
+      {"tipo_de_clave": "F", "fila": 3, "columna": 6, "clave": 9, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 3, "columna": 6, "clave": 20, "casillas": 6},
+
+      {"tipo_de_clave": "C", "fila": 4, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "F", "fila": 4, "columna": 2, "clave": 6, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 4, "columna": 2, "clave": 17, "casillas": 5},
+      {"tipo_de_clave": "F", "fila": 4, "columna": 5, "clave": 10, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 4, "columna": 5, "clave": 12, "casillas": 5},
+      {"tipo_de_clave": "C", "fila": 4, "columna": 8, "clave": 23, "casillas": 5},
+      {"tipo_de_clave": "C", "fila": 4, "columna": 9, "clave": 9, "casillas": 5},
+
+      {"tipo_de_clave": "F", "fila": 5, "columna": 1, "clave": 9, "casillas": 3},
+      {"tipo_de_clave": "F", "fila": 5, "columna": 4, "clave": 28, "casillas": 5},
+      {"tipo_de_clave": "C", "fila": 5, "columna": 4, "clave": 26, "casillas": 4},
+
+      {"tipo_de_clave": "F", "fila": 6, "columna": 1, "clave": 24, "casillas": 6},
+      {"tipo_de_clave": "F", "fila": 6, "columna": 7, "clave": 8, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 6, "columna": 7, "clave": 19, "casillas": 3},
+
+      {"tipo_de_clave": "C", "fila": 7, "columna": 1, "clave": 0, "casillas": 0},
+      {"tipo_de_clave": "C", "fila": 7, "columna": 2, "clave": 10, "casillas": 2},
+      {"tipo_de_clave": "F", "fila": 7, "columna": 3, "clave": 16, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 7, "columna": 3, "clave": 4, "casillas": 2},
+      {"tipo_de_clave": "F", "fila": 7, "columna": 6, "clave": 10, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 7, "columna": 6, "clave": 15, "casillas": 2},
+      {"tipo_de_clave": "C", "fila": 7, "columna": 9, "clave": 0, "casillas": 0},
+
+      {"tipo_de_clave": "F", "fila": 8, "columna": 1, "clave": 20, "casillas": 4},
+      {"tipo_de_clave": "F", "fila": 8, "columna": 5, "clave": 21, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 8, "columna": 9, "clave": 0, "casillas": 0},
+
+      {"tipo_de_clave": "F", "fila": 9, "columna": 1, "clave": 11, "casillas": 4},
+      {"tipo_de_clave": "F", "fila": 9, "columna": 5, "clave": 10, "casillas": 3},
+      {"tipo_de_clave": "C", "fila": 9, "columna": 9, "clave": 0, "casillas": 0}
+    ]
+  }
 ]

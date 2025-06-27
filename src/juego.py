@@ -21,15 +21,13 @@ from src import game_logic
 from src import menus
 import tkinter as tk
 
+
+borrado = False
+terminado = False
 #Función prinicipal del programa
 def main():
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    config_path = os.path.join(script_dir, "kakuro2025_configuracion.json")
-
-    with open(config_path, "r") as file:
-        configs = json.load(file)
 
     #Va a iniciar el juego
     def iniciar_juego():
@@ -46,7 +44,62 @@ def main():
         continuar = tk.Button(antes_jugar, text="Continuar", font=("Futura", 12), command=lambda: iniciar_partida(nombre_entry.get()))
         continuar.grid(row=2, column=0, padx=20, pady=10)
         
+        def mostrar_overlay_iniciar(ventana_juego):
+            """Crea y muestra el overlay de iniciar juego"""
+            overlay = tk.Toplevel(ventana_juego)
+            overlay.title("Kakuro - Jugando")
+            
+            def cerrar_overlay_e_iniciar_reloj():
+                overlay.destroy()
+                # Iniciar el reloj si existe la función
+                if hasattr(ventana_juego, 'iniciar_reloj'):
+                    ventana_juego.iniciar_reloj()
+            
+            tk.Button(overlay, text="INICIAR JUEGO", font=("Futura",20), bg='green', 
+                     command=cerrar_overlay_e_iniciar_reloj).pack(pady=400)
+            overlay.grab_set() 
+            overlay.transient(ventana_juego)
+            
+            ventana_juego.update_idletasks()
+            
+            juego_x = ventana_juego.winfo_x()
+            juego_y = ventana_juego.winfo_y()
+            juego_width = ventana_juego.winfo_width()
+            juego_height = ventana_juego.winfo_height()
+
+            overlay_width = 600
+            overlay_height = 900
+            overlay.geometry(f"{overlay_width}x{overlay_height}+{juego_x + (juego_width - overlay_width)//2}+{juego_y + (juego_height - overlay_height)//2}")
+            
+            return overlay
+
+        def borrar_juego(window, nombre):
+            respuesta = messagebox.askyesno("Borrar Juego", "¿Está seguro de que desea borrar el juego actual?\n(Se mantendrá la misma partida)")
+            if respuesta:
+                game_logic.borrar_partida_actual()
+                
+                # Reiniciar el reloj si existe
+                if hasattr(window, 'reiniciar_reloj'):
+                    window.reiniciar_reloj()
+                
+                mostrar_overlay_iniciar(window)
+                print("Juego borrado - misma partida")
+
+        def terminar_juego(window, nombre):
+            respuesta = messagebox.askyesno("Terminar Juego", "¿Está seguro de que desea terminar el juego?\n(Se cambiará a una nueva partida)")
+            if respuesta:
+                window.destroy()
+                iniciar_partida(nombre)
+                terminado = True
+
         def iniciar_partida(nombre):
+
+            config_path = os.path.join(script_dir, "kakuro2025_configuracion.json")
+
+            with open(config_path, "r") as file:
+                configs = json.load(file)
+
+            global borrado, terminado
             if nombre.strip() == "":
                 errores.error(antes_jugar, "Nombre sin llenar", 3, 0)
                 return
@@ -55,11 +108,23 @@ def main():
                 errores.error(antes_jugar, "Nombre debe tener entre 1 y 40 caracteres", 3, 0)
                 return
             
+            cambiar_partida = True
+            if borrado:
+                # Solo resetear el juego, mantener la misma partida
+                game_logic.resetear_juego()
+                cambiar_partida = False
+                borrado = False
+            elif terminado:
+                # Resetear totalmente y cambiar partida
+                game_logic.resetear_total()
+                cambiar_partida = True
+                terminado = False
+            
             antes_jugar.destroy()
             root.withdraw()
             juego = tk.Toplevel()
             juego.title("Kakuro - Jugando")
-            juego.geometry("600x850") 
+            juego.geometry("600x900") 
 
             # Título Kakuro
             titulo = tk.Label(juego, text="KAKURO", font=('Arial Black', 28, 'bold'), fg='green')
@@ -73,8 +138,15 @@ def main():
             
             game_logic.establecer_num_seleccionado(0)
             
-            # Tablero
-            tablero = game_logic.setup_juego(juego)
+            # Tablero - pasamos el parámetro cambiar_partida
+            tablero = game_logic.setup_juego(juego, cambiar_partida=cambiar_partida)
+            
+            # Si no hay partidas disponibles, volver al menú principal
+            if tablero is None:
+                juego.destroy()
+                root.deiconify()  # Mostrar la ventana principal nuevamente
+                return
+            
             tablero.grid(row=2, column=0, columnspan=2, rowspan=9, padx=10, pady=10)
             
             # Botones de números
@@ -103,7 +175,7 @@ def main():
             btn_deshacer.grid(row=0, column=1, padx=5, pady=5)
             
             btn_borrar = tk.Button(botones_frame, text="BORRAR\nJUEGO", font=('Arial', 10, 'bold'), 
-                                  bg="#59ABFD", fg='black', width=12, height=2)
+                                  bg="#59ABFD", fg='black', width=12, height=2, command=lambda: borrar_juego(juego, nombre))
             btn_borrar.grid(row=0, column=2, padx=5, pady=5)
             
             btn_guardar = tk.Button(botones_frame, text="GUARDAR\nJUEGO", font=('Arial', 10, 'bold'), 
@@ -120,30 +192,140 @@ def main():
             btn_rehacer.grid(row=1, column=1, padx=5, pady=5)
             
             btn_terminar = tk.Button(botones_frame, text="TERMINAR\nJUEGO", font=('Arial', 10, 'bold'), 
-                                    bg="#006B24", fg='black', width=12, height=2)
+                                    bg="#006B24", fg='black', width=12, height=2, command=lambda: terminar_juego(juego, nombre))
             btn_terminar.grid(row=1, column=2, padx=5, pady=5)
             
             btn_cargar = tk.Button(botones_frame, text="CARGAR\nJUEGO", font=('Arial', 10, 'bold'), 
                                   bg="#DB4F09", fg='black', width=12, height=2)
             btn_cargar.grid(row=1, column=3, padx=5, pady=5)
             
-            # Reloj
-            reloj_frame = tk.Frame(juego)
-            reloj_frame.grid(row=13, column=0, columnspan=3, pady=10)
+            # Reloj - implementación funcional basada en configuración
+            tipo_reloj = configs.get("tipo_reloj")
             
-            headers = ["Horas", "Minutos", "Segundos"]
-            for i, text in enumerate(headers):
-                label = tk.Label(reloj_frame, text=text, borderwidth=1, relief="solid", width=10)
-                label.grid(row=0, column=i)
+            if tipo_reloj != "nousar_reloj":
+                reloj_frame = tk.Frame(juego)
+                reloj_frame.grid(row=13, column=0, columnspan=3, pady=10)
                 
-            horas = tk.Label(reloj_frame, text="00", borderwidth=1, relief="sunken", width=10)
-            horas.grid(row=1, column=0)
-            
-            minutos = tk.Label(reloj_frame, text="00", borderwidth=1, relief="sunken", width=10)
-            minutos.grid(row=1, column=1)
-            
-            segundos = tk.Label(reloj_frame, text="00", borderwidth=1, relief="sunken", width=10)
-            segundos.grid(row=1, column=2)
+                headers = ["Horas", "Minutos", "Segundos"]
+                for i, text in enumerate(headers):
+                    label = tk.Label(reloj_frame, text=text, borderwidth=1, relief="solid", width=10)
+                    label.grid(row=0, column=i)
+                    
+                horas_label = tk.Label(reloj_frame, text="00", borderwidth=1, relief="sunken", width=10)
+                horas_label.grid(row=1, column=0)
+                
+                minutos_label = tk.Label(reloj_frame, text="00", borderwidth=1, relief="sunken", width=10)
+                minutos_label.grid(row=1, column=1)
+                
+                segundos_label = tk.Label(reloj_frame, text="00", borderwidth=1, relief="sunken", width=10)
+                segundos_label.grid(row=1, column=2)
+                
+                # Variables para el reloj
+                if tipo_reloj == "cronometro":
+                    tiempo_total_segundos = 0
+                    incrementar = True
+                elif tipo_reloj == "temporizador":
+                    tiempo_config = configs.get("tiempo", "00:00:00")
+                    h, m, s = map(int, tiempo_config.split(":"))
+                    tiempo_total_segundos = h * 3600 + m * 60 + s
+                    incrementar = False
+                
+                # Variable para controlar si el reloj está corriendo
+                reloj_corriendo = False
+                
+                def actualizar_reloj():
+                    nonlocal tiempo_total_segundos, reloj_corriendo, tipo_reloj
+                    
+                    if not reloj_corriendo:
+                        return
+                    
+                    if tipo_reloj == "cronometro":
+                        tiempo_total_segundos += 1
+                        if tiempo_total_segundos >= 3600 * 2 + 59 * 60 + 59:
+                            reloj_corriendo = False
+                            messagebox.showinfo("Tiempo límite", "El cronómetro alcanzó el tiempo maximo. Se cerrará el juego en 5 segundos.")
+                            juego.after(5000, juego.destroy)
+                            main()
+                            
+                    elif tipo_reloj == "temporizador":
+                        if tiempo_total_segundos > 0:
+                            tiempo_total_segundos -= 1
+                        else:
+                            # Tiempo agotado
+                            reloj_corriendo = False
+                            respuesta = messagebox.askyesno("Tiempo Expirado", "¡Se acabó el tiempo! ¿Desea continuar el mismo juego?")
+                            
+                            if respuesta:
+                                # Guardar el tiempo del temporizador original
+                                tiempo_config = configs.get("tiempo", "00:00:00")
+                                h, m, s = map(int, tiempo_config.split(":"))
+                                tiempo_temporizador_original = h * 3600 + m * 60 + s
+                                
+                                # Convertir a cronómetro
+                                tipo_reloj = "cronometro"
+                                tiempo_total_segundos = tiempo_temporizador_original
+                                reloj_corriendo = True
+                                
+                                # Continuar con el cronómetro
+                                juego.after(1000, actualizar_reloj)
+                            else:
+                                juego.destroy()
+                                main()
+
+                            return
+
+                    # Calcular horas, minutos y segundos
+                    horas = tiempo_total_segundos // 3600
+                    minutos = (tiempo_total_segundos % 3600) // 60
+                    segundos = tiempo_total_segundos % 60
+                    
+                    # Actualizar labels
+                    horas_label.config(text=f"{horas:02d}")
+                    minutos_label.config(text=f"{minutos:02d}")
+                    segundos_label.config(text=f"{segundos:02d}")
+                    
+                    # Programar la próxima actualización
+                    if reloj_corriendo:
+                        juego.after(1000, actualizar_reloj)
+                
+                def iniciar_reloj():
+                    nonlocal reloj_corriendo
+                    reloj_corriendo = True
+                    actualizar_reloj()
+                
+                def pausar_reloj():
+                    nonlocal reloj_corriendo
+                    reloj_corriendo = False
+                
+                def reiniciar_reloj():
+                    nonlocal tiempo_total_segundos, reloj_corriendo
+                    reloj_corriendo = False
+                    
+                    if tipo_reloj == "cronometro":
+                        tiempo_total_segundos = 0
+                        horas_label.config(text="00")
+                        minutos_label.config(text="00")
+                        segundos_label.config(text="00")
+                    elif tipo_reloj == "temporizador":
+                        tiempo_config = configs.get("tiempo", "00:00:00")
+                        h, m, s = map(int, tiempo_config.split(":"))
+                        tiempo_total_segundos = h * 3600 + m * 60 + s
+                        horas_label.config(text=f"{h:02d}")
+                        minutos_label.config(text=f"{m:02d}")
+                        segundos_label.config(text=f"{s:02d}")
+                
+                # Inicializar el reloj con el tiempo inicial
+                if tipo_reloj == "temporizador":
+                    tiempo_config = configs.get("tiempo", "00:00:00")
+                    h, m, s = map(int, tiempo_config.split(":"))
+                    horas_label.config(text=f"{h:02d}")
+                    minutos_label.config(text=f"{m:02d}")
+                    segundos_label.config(text=f"{s:02d}")
+                
+                # Guardar las funciones del reloj en la ventana del juego
+                juego.iniciar_reloj = iniciar_reloj
+                juego.pausar_reloj = pausar_reloj
+                juego.reiniciar_reloj = reiniciar_reloj
             
             # Nivel
             nivel = configs["nivel"]
@@ -161,25 +343,17 @@ def main():
             nivel_label = tk.Label(juego, text=f"NIVEL {nivel}", font=('Arial', 12, 'bold'))
             nivel_label.grid(row=14, column=0, columnspan=3, pady=5)
 
-            overlay = tk.Toplevel(juego)
-            overlay.title("Kakuro - Jugando")
-            tk.Button(overlay, text="INICIAR JUEGO", font=("Futura",20), bg='green', command=overlay.destroy).pack(pady=450)
-            overlay.grab_set() 
-            overlay.transient(juego) 
-            
-            juego.update_idletasks()
-
-            juego_x = juego.winfo_x()
-            juego_y = juego.winfo_y()
-            juego_width = juego.winfo_width()
-            juego_height = juego.winfo_height()
-
-            overlay_width = 600
-            overlay_height = 850
-            overlay.geometry(f"{overlay_width}x{overlay_height}+{juego_x + (juego_width - overlay_width)//2}+{juego_y + (juego_height - overlay_height)//2}")
+            # Mostrar overlay de iniciar
+            mostrar_overlay_iniciar(juego)
 
     #Va a iniciar la configuración
     def configuracion():
+
+        config_path = os.path.join(script_dir, "kakuro2025_configuracion.json")
+
+        with open(config_path, "r") as file:
+            configs_para_cambiar = json.load(file)
+
         config = tk.Toplevel()
         config.title("Kakuro - Configuración")
         config.geometry("400x640")
@@ -192,7 +366,7 @@ def main():
         titulo = tk.Label(config, text="Configuración", font=("Futura", 24))
         titulo.grid(row=0, column=1, columnspan=2, padx=20, pady=20)
 
-        dificultad= tk.StringVar(value="facil")
+        dificultad= tk.StringVar(value=f"{configs_para_cambiar['nivel']}")
 
         dificultad_label = tk.Label(config, text="Dificultad:", font=("Futura", 16))
         dificultad_label.grid(row=1, column=1, columnspan=2, padx=20, pady=10, sticky='w')
@@ -224,13 +398,13 @@ def main():
                 label = tk.Label(frame_temp, text=text, borderwidth=1, relief="solid", width=10)
                 label.grid(row=0, column=i + 1)
 
-            spin_horas = tk.Spinbox(frame_temp, from_=0, to=2, width=10, justify='center', textvariable=tiempo_vars["horas"])
+            spin_horas = tk.Spinbox(frame_temp, from_=0, to=2, width=10, justify='center', relief="sunken", textvariable=tiempo_vars["horas"])
             spin_horas.grid(row=1, column=1)
 
-            spin_minutos = tk.Spinbox(frame_temp, from_=0, to=59, width=10, justify='center', textvariable=tiempo_vars["minutos"])
+            spin_minutos = tk.Spinbox(frame_temp, from_=0, to=59, width=10, justify='center', relief="sunken", textvariable=tiempo_vars["minutos"])
             spin_minutos.grid(row=1, column=2)
 
-            spin_segundos = tk.Spinbox(frame_temp, from_=0, to=59, width=10, justify='center', textvariable=tiempo_vars["segundos"])
+            spin_segundos = tk.Spinbox(frame_temp, from_=0, to=59, width=10, justify='center', relief="sunken", textvariable=tiempo_vars["segundos"])
             spin_segundos.grid(row=1, column=3)
         
         def hide_temporizador():
@@ -271,7 +445,9 @@ def main():
             config.destroy()
                                 
                  
-        tipo_reloj = tk.StringVar(value="cronometro")
+        tipo_reloj = tk.StringVar(value=f"{configs_para_cambiar['tipo_reloj']}")
+        if tipo_reloj.get() == "temporizador":
+            show_temporizador()
         
         cronometro_cb = tk.Radiobutton(config, text="Cronómetro", variable=tipo_reloj, value="cronometro", font=("Futura", 14), command=hide_temporizador)
         cronometro_cb.grid(row=7, column=1, padx=5, pady=2, sticky='w')

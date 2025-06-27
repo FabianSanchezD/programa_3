@@ -10,6 +10,7 @@ botones = []
 
 def numeros_botones(root, tamano=9, num_seleccionado=None):
     global botones
+    botones = []  # Resetear la lista de botones cada vez que se crea
     frame = tk.Frame(root)
     frame.grid(row=1, column=7, rowspan=9, padx=10, pady=10, sticky="n")
     
@@ -34,6 +35,7 @@ def numeros_botones(root, tamano=9, num_seleccionado=None):
         canvas.bind("<Button-1>", lambda e, num=i: onClick(num))
 
     print(botones)
+    
     def onClick(number):
         for btn, num in botones:
             btn.delete("all")
