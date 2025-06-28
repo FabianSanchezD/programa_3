@@ -21,7 +21,7 @@ Completar el tablero de Kakuro ingresando números del 1 al 9 en las casillas va
 
 
 ## Estructura del proyecto
-
+ ``` 
 programa_3/
 │
 ├── src/
@@ -45,13 +45,14 @@ programa_3/
 ├── modulos/
 │   └── errores.py
 ├── .gitignore
-└── README.md 
-
+└── README.md
+```
 
 ## Ejecución
 
 1. Instalar Python
-2. Correr el siguiente comando en la terminaL:
+2. Correr el siguiente comando en la terminal:
+
 
 ```bash
 python src/main.py
