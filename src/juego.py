@@ -567,7 +567,7 @@ def main():
 
         config = tk.Toplevel()
         config.title("Kakuro - Configuración")
-        config.geometry("400x640")
+        config.geometry("320x640")
 
         config.columnconfigure(0, weight=1)
         config.columnconfigure(1, weight=1)
@@ -678,7 +678,11 @@ def main():
 
     def iniciar_ayuda():
         '''Inicia la ventana de ayuda'''
-        print("Iniciando la ayuda...")
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        proyecto_dir = os.path.abspath(os.path.join(script_dir, ".."))
+        manual_usuario = os.path.join(proyecto_dir, "documentacion", "kakuro_manual_de_usuarios.pdf")
+    
+        os.startfile(manual_usuario)
 
     def iniciar_acerca_de():
         '''Inicia la ventana de acerca de'''
